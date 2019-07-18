@@ -1,0 +1,442 @@
+c *************************************************************************************************************
+c
+c								2D Model FBAR
+c
+c *************************************************************************************************************
+c
+c DESIGNER		:  		OnScale
+c MODEL DESCRIPTION	:	2D Model FBAR
+c DATE CREATED		:	9/05/2018
+c VERSION		:		1.0
+c
+c *************************************************************************************************************
+
+c The adds a title and description to output files
+titl fbar_2D	2D Model FBAR
+
+c Use all cores on machine
+mp omp * *
+
+c No restart file
+rest no
+
+c ************************************************************************************************************
+c
+c									MODEL PARAMETERS
+c
+c ************************************************************************************************************
+
+c Frame
+symbx fwid = 2.e-6						/* width of frame recess
+symbx fthk = 200.e-9					/* thickness of frame recess
+
+c Geometry
+symbx aln_thk = 800.e-9					/* thickness of AlN piezoelectric layer
+symb width = 100.e-6					/* width of cavity
+symb depth = 200.e-6					/* depth of device, used for area scaling
+symb aln_edge = 5.e-6					/* distance from frame recess to silicon substrate
+symb si_thk = 2.e-6						/* thickness of silicon substrate
+symb si_wid = 10.e-6					/* width of silicon substrate
+symb elec_bot = 400.e-9					/* bottom electrode thickness
+symb elec_top = 400.e-9					/* top electrode thickness
+
+c Define frequnecy and meshing
+symb freqint = 1.9e9					/* frequency of interest
+symb freqdamp = $freqint				/* damping frequency, used in damping models
+symb vel = 6000.						/* minimum velocity
+symb nelem = 20							/* number of elements per wavelength
+
+c Runtime
+symb ncycles = 5000						/* number of cycles to run the model for
+symb nloops = 10						/* plot model to screen this many times
+
+c Electrical
+symb rval = 1.e-3						/* damping resistor value
+
+c Calculations
+symb wavelength = $vel / $freqint		/* calculate wavelength
+symb box = $wavelength / $nelem			/* calculate box size for model
+symb elec_mid = $width - $fwid			/* midpoint of electrode
+symb ascal = 2. * $depth				/* electrode area scaling:
+										/* depth * 2 as half symmetry
+
+
+
+c ***********************************************************************************************************
+c
+c								X-Y-Z CO-ORDINATE SYSTEM
+c
+c ***********************************************************************************************************
+
+c Define keypoints in x
+symb #keycord x 1 0. $elec_mid $fwid $aln_edge $si_wid				/* this defines x1, x2, x3, x4
+symb #get { idx } rootmax x											/* find max indice for x variables
+
+c Define keypoints in y
+symb #keycord y 1 0. $si_thk $elec_bot $aln_thk $elec_top $fthk		/* this defines y1, y2, y3, y4
+symb #get { jdx } rootmax y											/* find max indice for y variables
+
+
+
+c ************************************************************************************************************
+c
+c									I-J-K CO-ORDINATE SYSTEM
+c
+c ************************************************************************************************************
+
+c Define i keypoints
+symb #keyindx i 1 $idx 1 $box
+symb indgrd = $i$idx						/* store maximum i value - ie. number of nodes in i
+
+c Define j keypoints
+symb #keyindx j 1 $jdx 1 $box
+symb jndgrd = $j$jdx						/* store maximum j value - ie. number of nodes in j
+
+c List symbols
+symb #list
+
+
+
+c ************************************************************************************************************
+c
+c									GRID & GEOMETRY DEFINITION
+c
+c ************************************************************************************************************
+
+c Create grid
+grid $indgrd $jndgrd
+
+c Assign geometry
+geom keypnt $idx $jdx
+
+
+
+c **********************************************************************************************************
+c
+c 									MATERIAL PROPERTIES & SITE
+c
+c **********************************************************************************************************
+
+c -------------------------------------------------------------- 
+c                   Project Material List
+c -------------------------------------------------------------- 
+
+
+c -------------------------------------------------------------------------
+c Global variables used in all the material definitions
+c -------------------------------------------------------------------------
+c
+symb epvacm = 8.854e-12               /* dielectric constant for vacumn
+symb freqdamp = 1.e6 if noexist       /* specified frequency for damping model
+symb rmu0 = 1.2566e-6
+
+symb #msg 5
+********************************************************
+Damping matched at $freqdamp Hz
+Redefine variable 'freqdamp' if device centre frequency
+varies significantly from this value
+********************************************************
+
+c -------------------------------------------------------------------------
+c    Now define the axis transformation - only posx used in this file
+c -------------------------------------------------------------------------
+
+axis
+     form vctr
+     defn posx car2 0. 0. 0.    1.  0.  0.   0. 1. 0.
+     defn negx car2 0. 0. 0.   -1.  0.  0.   0. 1. 0.
+     defn posy car2 0. 0. 0.    0.  1.  0.   0. 0. 1.
+     defn negy car2 0. 0. 0.    0. -1.  0.   0. 0. 1.
+     defn posz car2 0. 0. 0.    0.  0.  1.   1. 0. 0.
+     defn negz car2 0. 0. 0.    0.  0. -1.   1. 0. 0.
+     end
+
+c -------------------------------------------------------------------------
+c    Input material properties to program
+c -------------------------------------------------------------------------
+
+matr
+
+c -------------------------------------------------------------- 
+c type : SOLID : 
+c name : moly : 
+c desc : Molybdenum 
+c -------------------------------------------------------------- 
+
+   wvsp on 
+   type elas 
+   prop moly 10220 6649.79 3509.29
+   vdmp moly $freqdamp db 0.1 0.3 1e+06 1 0.01 1
+   hrgl moly visc 0.1
+
+c -------------------------------------------------------------- 
+c type : SOLID : 
+c name : si : 
+c desc : Silicon, generic : 
+c -------------------------------------------------------------- 
+
+   wvsp on 
+   type elas 
+   prop si 2330 9629.42 5322.86
+   vdmp si $freqdamp db 0.1 0.3 1e+06 1 0.01 1   
+   
+c -------------------------------------------------------------- 
+c type : PIEZO : 
+c name : aln : 
+c desc : AlN Parameters : 
+c -------------------------------------------------------------- 
+
+
+c    define baseline dielectric coefficients
+
+symb epxx = 9.9                   /* dielectric constant (constant strain)
+symb epyy = 9.9                   /* dielectric constant (constant strain)
+symb epzz = 9.9                   /* dielectric constant (constant strain)
+symb rho  = 3230                  /* density
+symb qdmp = 3000 if noexist       /* Mechanical Q at 1e6
+symb qsdmp = $qdmp                /* Mechanical Q at 1e6
+
+c    define baseline stiffness coefficients
+
+symb c11 = 3.96e+11           /* stiffness constant (constant electric field)
+symb c12 = 1.37e+11           /* stiffness constant
+symb c13 = 1.08e+11           /* stiffness constant
+symb c14 = 0                  /* stiffness constant
+symb c15 = 0                  /* stiffness constant
+symb c16 = 0                  /* stiffness constant
+symb c22 = 3.96e+11           /* stiffness constant (constant electric field)
+symb c23 = 1.08e+11           /* stiffness constant
+symb c24 = 0                  /* stiffness constant
+symb c25 = 0                  /* stiffness constant
+symb c26 = 0                  /* stiffness constant
+symb c33 = 3.73e+11           /* stiffness constant
+symb c34 = 0                  /* stiffness constant
+symb c35 = 0                  /* stiffness constant
+symb c36 = 0                  /* stiffness constant
+symb c44 = 1.16e+11           /* stiffness constant
+symb c45 = 0                  /* stiffness constant
+symb c46 = 0                  /* stiffness constant
+symb c55 = 1.16e+11           /* stiffness constant
+symb c56 = 0                  /* stiffness constant
+symb c66 = 1.295e+11	      /* stiffness constant
+
+c    define baseline piezoelectric coupling coefficients
+
+symb ex1 = 0                   /* coupling constant
+symb ex2 = 0                   /* coupling constant
+symb ex3 = 0                   /* coupling constant
+symb ex4 = 0                   /* coupling constant
+symb ex5 = -0.48               /* coupling constant
+symb ex6 = 0                   /* coupling constant
+symb ey1 = 0                   /* coupling constant
+symb ey2 = 0                   /* coupling constant
+symb ey3 = 0                   /* coupling constant
+symb ey4 = $ex5                /* coupling constant
+symb ey5 = 0                   /* coupling constant
+symb ey6 = 0                   /* coupling constant
+symb ez1 = -0.58               /* coupling constant
+symb ez2 = $ez1                /* coupling constant
+symb ez3 = 1.55                /* coupling constant
+symb ez4 = 0                   /* coupling constant
+symb ez5 = 0                   /* coupling constant
+symb ez6 = 0                   /* coupling constant
+
+c    scale material properties as specified above
+
+symb aepxx = $epvacm * $epxx
+symb aepyy = $epvacm * $epyy
+symb aepzz = $epvacm * $epzz
+
+     wvsp off 
+     type lean
+
+     prop aln $rho
+     $c11     $c12     $c13     $c14    $c15    $c16    $c22
+     $c23     $c24     $c25     $c26    $c33    $c34    $c35
+     $c36     $c44     $c45     $c46    $c55    $c56    $c66
+
+     elec aln $aepxx $aepyy $aepzz
+
+     piez aln 1 1 $ex1 1 2 $ex2 1 3 $ex3 1 4 $ex4 1 5 $ex5 1 6 $ex6 &
+       2 1 $ey1 2 2 $ey2 2 3 $ey3 2 4 $ey4 2 5 $ey5 2 6 $ey6 &
+       3 1 $ez1 3 2 $ez2 3 3 $ez3 3 4 $ez4 3 5 $ez5 3 6 $ez6
+
+     rdmp aln $freqdamp q $qdmp $qsdmp 2.e9 1.0
+
+     axis aln posy   /* relate materials local system to global system
+	 hrgl aln visc 0.1  
+   
+   elec void $epvacm
+   end
+
+c -------------------------------------------------------------------------
+
+
+c Assign materials to grid
+site 
+	regn void
+	
+	/* Layers
+ 	regn aln $i1 $indgrd $j3 $j4
+ 	regn moly $i1 $indgrd $j2 $j3
+ 	regn moly $i1 $i3 $j4 $j5
+	regn si $i4 $i5 $j1 $j2
+	
+	/* Frame
+	regn moly $i2 $i3 $j5 $j6
+	end
+
+	
+c Plot the model
+grph
+	line off
+	mirr x on	
+	plot matr	
+	end
+
+term
+
+
+
+c **********************************************************************************************************
+c
+c 									INPUTS
+c
+c **********************************************************************************************************
+
+c Define external boundary conditions
+boun
+	side xmin symm
+	side xmax fixd
+	side ymin fixd
+	side ymax free
+	end	
+
+
+c Define drive function, can be accessed using 'func' argument
+func wvlt $freqint 1.
+
+c Define damping circuit
+circ
+	defn rdamp						/* name of circuit
+	elem rest sers $rval			/* create series damping resistor
+	end
+
+c Define piezo solve
+piez
+	/* Define electric window
+	wndo $i1 $indgrd $j3 $j4
+	
+	/* Define top electrode
+	defn top $ascal					/* new electrode called 'top'
+	node $i1 $indgrd $j4 $j4		/* electrode location
+	conn top rdamp volt func		/* apply 'func' as a voltage
+	
+	/* Define bottom electrode
+	defn bot $ascal					/* new electrode called 'bot'
+	node $i1 $indgrd $j3 $j3		/* electrode location
+	bc bot grnd						/* assign electrical ground
+	
+	slvr pard
+	
+	end
+
+
+
+c ********************************************************************************************************
+c 
+c 									OUTPUTS
+c
+c ********************************************************************************************************
+
+
+calc
+	disp
+	end
+
+	
+shap
+	data ydsp
+	freq 1.967e9
+	end
+
+	
+c Time histories to store
+pout
+	hist func							/* #1 Drive function
+	histname electrode vq all			/* #2 - #5 Voltage and charge on each electrode
+	end
+
+
+c *******************************************************************************************************
+c
+c 									PROCESS MODEL
+c
+c *******************************************************************************************************
+
+c Process model, including setting time step
+time * * 0.95 
+prcs                                    
+
+c Plot model
+grph
+	arrow pole				/* plot poling arrows in pzt
+	plot matr piez			/* plot materials and electrodes
+	end
+
+term
+
+
+c *******************************************************************************************************
+c
+c						 			RUN THE MODEL
+c
+c *******************************************************************************************************
+
+c Set up run parameters
+symb simtime = $ncycles / $freqint		/* total runtime of the model
+symb #get { step } timestep				/* store timestep size in variable 'step'
+symb nexec = $simtime / $step			/* total number of executions
+symb nexec2 = $nexec / $nloops			/* number of executions in a loop
+
+c Set up graphics
+grph
+	line off
+	arrow off							/* don't plot poling arrows
+	nvew 2 2
+	end
+
+c Define run/plot procedure
+proc plot save
+
+c Run model for some time
+exec $nexec2
+
+c Plot current state of model
+grph
+	plot yvel
+	plot 3								/* plot charge on top electrode
+	end
+
+end$ proc								/* end of proc
+
+c Get start time
+symb #get { tbeg } wtime
+
+c Run model
+proc plot $nloops
+
+c Plot runtime
+symb #get { tend } wtime
+symb trun = $tend - $tbeg
+symb #msg 2
+Total runtime: $trun seconds
+
+data
+	file out shape.flxdato
+	out shap/all
+	end
+
+term
+
+stop								/* return to command prompt
