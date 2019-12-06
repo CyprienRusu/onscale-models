@@ -1,0 +1,575 @@
+c mem 800 200 /* Allocate 800 megawords of memory - 3 GigaBytes (Not necesarry for Windows Operating Systems)
+c NOTE: MEM Command must be first command in file, if used. (Line 1)
+rest no 
+
+c ************************************************************************************************************* 
+c 
+c 				Generated Flex Input File
+c 
+c ************************************************************************************************************* 
+c 
+c	DESIGNER			:OnScale - Designer Generated
+c	MODEL DESCRIPTION	:
+c	DATE CREATED		:5 Dec 2019
+c	VERSION				:1.0
+c ************************************************************************************************************* 
+
+mp
+	omp * *  		 /* Number of CPUs to be used in the execution.
+	end
+ 
+titl 2D Transducer 3 
+
+c ************************************************************************************************************* 
+c 
+c 			Define User Variables 
+c 
+c ************************************************************************************************************* 
+c 
+c These variables have been set by the user through the interface.
+c 
+c ************************************************************************************************************* 
+
+symb coordFactor = 1.0		 /* Coordinate conversion factor
+symb timeFactor = 1.0		 /* Time conversion factor
+symb dMassFactor = 1.0		 /* Mass conversion factor
+symb freqint = 1e+06		 /* Determined Drive Frequency (Hz)
+
+c ************************************************************************************************************* 
+c 
+c 			Define Meshing 
+c 
+c ************************************************************************************************************* 
+c 
+c 			Set the variable for the approximate element size for the model. Must be 
+c			sufficient to represent the wavelengths of interest. Recommended that at least 
+c			15 elements per wavelength are used.
+
+c 
+c ************************************************************************************************************* 
+
+symb freqdamp = $freqint
+symb wavevel = 1496.0		 /* Longitudinal wave velocity in material (m/s)
+symb wavelgth = $wavevel / $freqint		 /* Wavelength of sound in material (m)
+symb nmesh = 15		 /* Elements per wavelength
+symb box = $wavelgth / $nmesh
+
+c ************************************************************************************************************* 
+c 
+c 			Parameter Definitions
+c 
+c ************************************************************************************************************* 
+
+symb pzt_beg = 0.005
+symbx pzt_thk = 0.002
+symb pzt_end = $pzt_beg + $pzt_thk
+symbx hard_thk = 0.000634
+symb hard_end = $pzt_end + $hard_thk
+
+c ************************************************************************************************************* 
+c 
+c 			Geometry Locations (XYZ)
+c 
+c ************************************************************************************************************* 
+
+
+c Scale Parameters
+symb xmin = 0.0 * $coordFactor
+symb xmax = 0.015 * $coordFactor
+symb ymin = 0.0 * $coordFactor
+symb ymax = 0.015 * $coordFactor
+
+c Determine lengths of the model
+symb xlen = ( $xmax - $xmin )
+symb ylen = ( $ymax - $ymin )
+
+c *************************************************** 
+c 
+c 			Keypoints in the X-Direction
+c 
+c *************************************************** 
+
+symb x1 = $xmin
+symb x2 = 0.01 * $coordFactor
+symb x3 = $xmax
+symb #get { idx } rootmax x 
+
+c *************************************************** 
+c 
+c 			Keypoints in the Y-Direction
+c 
+c *************************************************** 
+
+symb y1 = $ymin
+symb y2 = 0.005 * $coordFactor
+symb y3 = 0.007 * $coordFactor
+symb y4 = 0.007634 * $coordFactor
+symb y5 = $ymax
+symb #get { jdx } rootmax y 
+
+c ************************************************************************************************************* 
+c 
+c 			Indices Locations (IJK)
+c 
+c ************************************************************************************************************* 
+
+c Grid in I direction, using approximately element size of 'box' and at least 1 element
+symb #keyindx i 1 $idx 1 $box 1 
+symb indgrd = $i$idx
+
+c Grid in J direction, using approximately element size of 'box' and at least 1 element
+symb #keyindx j 1 $jdx 1 $box 1 
+symb jndgrd = $j$jdx
+
+
+c ************************************************************************************************************* 
+c 
+c 			GCON Grid & Geometry Allocation
+c 
+c ************************************************************************************************************* 
+
+grid $i$idx $j$jdx axiy 
+geom
+	keypnt $idx $jdx 
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Driving Conditions 
+c 
+c ************************************************************************************************************* 
+c 
+c 			A number of predefined waveform functions can be accessed in OnScale. The DATA 
+c			HIST option is used below, other examples include wavelets, gaussians and step 
+c			functions. The manual details the function entries
+
+c 
+c ************************************************************************************************************* 
+
+symb freqtimefunc_1 = 1e+06
+func
+	name timefunc_1 
+	wvlt $freqtimefunc_1 1.0 4.0 0.0 
+	end
+ 
+c -------------------------------------------------------------- 
+c                   Project Material List
+c -------------------------------------------------------------- 
+
+
+c -------------------------------------------------------------------------
+c Global variables used in all the material definitions
+c -------------------------------------------------------------------------
+c
+symb epvacm = 8.854e-12               /* dielectric constant for vacumn
+symb freqdamp = 1.e6 if noexist       /* specified frequency for damping model
+symb rmu0 = 1.2566e-6
+
+symb #msg 5
+********************************************************
+Damping matched at $freqdamp Hz
+Redefine variable 'freqdamp' if device centre frequency
+varies significantly from this value
+********************************************************
+
+
+c
+c -------------------------------------------------------------------------
+c    Now define the axis transformation - only posx used in this file
+c -------------------------------------------------------------------------
+
+axis
+     form vctr
+     defn posx car2 0. 0. 0.    1.  0.  0.   0. 1. 0.
+     defn negx car2 0. 0. 0.   -1.  0.  0.   0. 1. 0.
+     defn posy car2 0. 0. 0.    0.  1.  0.   0. 0. 1.
+     defn negy car2 0. 0. 0.    0. -1.  0.   0. 0. 1.
+     defn posz car2 0. 0. 0.    0.  0.  1.   1. 0. 0.
+     defn negz car2 0. 0. 0.    0.  0. -1.   1. 0. 0.
+     end
+
+c -------------------------------------------------------------------------
+c    Input material properties to program
+c -------------------------------------------------------------------------
+
+matr
+
+c -------------------------------------------------------------- 
+c type : FLUID : 
+c name : watr : 
+c desc : Water at 25C : 
+c -------------------------------------------------------------- 
+
+	wvsp on 
+	type elas 
+	prop watr 1000.00 1496.00 0.00000 0.
+	vdmp watr $freqdamp db 0.002 0 1e+06 2 0.01 *
+	thrm watr 4181 0.61 0.61 0.61 1.0 0 0 27
+c	define baseline dielectric coefficients
+
+	symb epxx = 3
+	symb epyy = 3
+	symb epzz = 3
+
+c	scale material properties as specified above
+	symb aepxx = $epvacm * $epxx
+	symb aepyy = $epvacm * $epyy
+	symb aepzz = $epvacm * $epzz
+
+	elec watr $aepxx $aepyy $aepzz
+
+
+c -------------------------------------------------------------- 
+c type : EPOXY : 
+c name : back20 : 
+c desc : Backing, tungsten loaded epoxy, 20%vf, 8.6 MRayl : 
+c -------------------------------------------------------------- 
+
+	wvsp on 
+	type elas 
+	prop back20 4800.00 1800.00 962.000 0.010000
+	vdmp back20 $freqdamp db 310 930 3e+07 1 0.01 1
+c	define baseline dielectric coefficients
+
+	symb epxx = 4
+	symb epyy = 4
+	symb epzz = 4
+
+c	scale material properties as specified above
+	symb aepxx = $epvacm * $epxx
+	symb aepyy = $epvacm * $epyy
+	symb aepzz = $epvacm * $epzz
+
+	elec back20 $aepxx $aepyy $aepzz
+
+
+c -------------------------------------------------------------- 
+c type : PIEZO : 
+c name : pmt3 : 
+c desc : CTS 3203HD : 
+c -------------------------------------------------------------- 
+
+	symb rho  = 7820.00                    /* density
+	wvsp off 
+	type lean
+
+c    define baseline stiffness coefficients (Constant electric field)
+
+	symb c11 = 1.3745e+11
+	symb c12 = 8.79e+10
+	symb c13 = 9.23e+10
+	symb c14 = 0
+	symb c15 = 0
+	symb c16 = 0
+	symb c22 = 1.3745e+11
+	symb c23 = 9.23e+10
+	symb c24 = 0
+	symb c25 = 0
+	symb c26 = 0
+	symb c33 = 1.2574e+11
+	symb c34 = 0
+	symb c35 = 0
+	symb c36 = 0
+	symb c44 = 2.2279e+10
+	symb c45 = 0
+	symb c46 = 0
+	symb c55 = 2.2279e+10
+	symb c56 = 0
+	symb c66 = 2.4779e+10
+
+	prop pmt3 $rho 
+	$c11     $c12     $c13     $c14    $c15    $c16    $c22
+	$c23     $c24     $c25     $c26    $c33    $c34    $c35
+	$c36     $c44     $c45     $c46    $c55    $c56    $c66
+
+c	define baseline dielectric coefficients
+
+	symb epxx = 1305.8
+	symb epyy = 1305.8
+	symb epzz = 1200.2
+
+c	scale material properties as specified above
+	symb aepxx = $epvacm * $epxx
+	symb aepyy = $epvacm * $epyy
+	symb aepzz = $epvacm * $epzz
+
+	elec pmt3 $aepxx $aepyy $aepzz
+
+c    define baseline piezoelectric coupling coefficients
+
+	symb ex1 = 0			/* coupling constant
+	symb ex2 = 0			/* coupling constant
+	symb ex3 = 0			/* coupling constant
+	symb ex4 = 0			/* coupling constant
+	symb ex5 = 16.054			/* coupling constant
+	symb ex6 = 0			/* coupling constant
+	symb ey1 = 0			/* coupling constant
+	symb ey2 = 0			/* coupling constant
+	symb ey3 = 0			/* coupling constant
+	symb ey4 = 16.054			/* coupling constant
+	symb ey5 = 0			/* coupling constant
+	symb ey6 = 0			/* coupling constant
+	symb ez1 = -9.44			/* coupling constant
+	symb ez2 = -9.44			/* coupling constant
+	symb ez3 = 22.495			/* coupling constant
+	symb ez4 = 0			/* coupling constant
+	symb ez5 = 0			/* coupling constant
+	symb ez6 = 0			/* coupling constant
+
+	piez pmt3 1 1 $ex1 1 2 $ex2 1 3 $ex3 1 4 $ex4 1 5 $ex5 1 6 $ex6 &
+			2 1 $ey1 2 2 $ey2 2 3 $ey3 2 4 $ey4 2 5 $ey5 2 6 $ey6 &
+			3 1 $ez1 3 2 $ez2 3 3 $ez3 3 4 $ez4 3 5 $ez5 3 6 $ez6
+
+	rdmp pmt3 $freqdamp q 90 90 1e+06 * * *
+	axis pmt3 posy   /* relate materials local system to global system
+
+
+c -------------------------------------------------------------- 
+c type : EPOXY : 
+c name : hard : 
+c desc : Vantico HY1300/CY1301 : 
+c -------------------------------------------------------------- 
+
+	wvsp on 
+	type elas 
+	prop hard 1149.00 2536.00 1179.00 0.010000
+	vdmp hard $freqdamp db 2.87 7.38 1e+06 1 0.01 1
+c	define baseline dielectric coefficients
+
+	symb epxx = 4
+	symb epyy = 4
+	symb epzz = 4
+
+c	scale material properties as specified above
+	symb aepxx = $epvacm * $epxx
+	symb aepyy = $epvacm * $epyy
+	symb aepzz = $epvacm * $epzz
+
+	elec hard $aepxx $aepyy $aepzz
+
+	elec void $epvacm
+	end
+
+c ************************************************************************************************************* 
+c 
+c 			Primitive Definitions
+c 
+c ************************************************************************************************************* 
+
+site
+	regn void 
+	blok watr 0.0 0.015 0.0 0.015 0.0 0.0 
+	blok back20 0.0 0.01 0.0 0.005 0.0 0.0 
+	blok pmt3 0.0 0.01 $pzt_beg $pzt_end 0.0 0.0 
+	blok hard 0.0 0.01 $pzt_end $hard_end 0.0 0.0 
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Boundary Definitions
+c 
+c ************************************************************************************************************* 
+
+boun
+	side xmin symm 
+	side xmax absr 
+	side ymin absr 
+	side ymax absr 
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Calculated Properties 
+c 
+c ************************************************************************************************************* 
+c 
+c 			By default, Flex only calculates the minimum required data set, typically this 
+c			means only velocities. This is done for memory efficiency. Should other 
+c			properites be required (e.g. displacements, stresses, strains, pressure), then 
+c			these must be requested by the CALC command. The manual lists all these options
+
+c 
+c ************************************************************************************************************* 
+
+calc
+	pres acoustic 		 /* calculate acoustic pressure
+	max aprs none apmx  		 /* calculate min/max acoustic pressure
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Piezoelectric Load Definitions
+c 
+c ************************************************************************************************************* 
+
+piez
+	wndo auto piez 
+	defn load_1 
+	nod2 pmt3 hard 
+	bc load_1 volt functimefunc_1 1.0 0.0 
+
+	defn load_2 
+	nod2 pmt3 back20 
+	bc load_2 grnd 
+	slvr drct 
+	end
+ 
+
+
+c ************************************************************************************************************* 
+c 
+c 			Define Extrapolation 
+c 
+c ************************************************************************************************************* 
+c 
+c This section sets up the extrapolation boundaries for the model.
+c 
+c ************************************************************************************************************* 
+
+extr
+	defn kirc  		 /* Kirchoff extrapolation
+	ref in $x1 $y1 
+	symb yref = 0.01 * $coordFactor
+	symb #get { * jref } clsnode 0. $yref
+	node * * $jref $jref 
+	driv functimefunc_1 		 /* * * * * * *
+	end
+ 
+time * * 0.8 
+
+c ************************************************************************************************************* 
+c 
+c 			Process Model 
+c 
+c ************************************************************************************************************* 
+c 
+c 			Issue process (PRCS) command. Checks model integrity, and calculates stable 
+c			time step. NOTE: Process command must always be issued
+
+c 
+c ************************************************************************************************************* 
+
+symb #msg 1
+Checking Model Integrity......
+prcs
+grph
+	colr user size 4 
+	colr user 1 1.0 1.0 0.0 
+	colr user 2 0.0 0.0 1.0 
+	colr user 3 0.0 1.0 0.0 
+	colr user 4 0.0 1.0 1.0 
+	colr tabl matr 7 
+	map watr 1 
+	map back20 2 
+	map pmt3 3 
+	map hard 4 
+	end
+ 
+grph
+	line off 
+	nvew 2 1 
+	arrow pole 
+	plot piez 
+	plot matr piez 
+	arrow off 
+	end
+ 
+term
+
+c ************************************************************************************************************* 
+c 
+c 			Choose Time Histories To Store 
+c 
+c ************************************************************************************************************* 
+c 
+c 			Save field (such as displacement or pressure) from a node or element for all 
+c			time steps with POUT command. Histories are referenced by order of 
+c			specification. Histories will be saved in the Flex History file (flxhst).
+
+c 
+c ************************************************************************************************************* 
+
+pout
+	rate 1 
+	symb xloc = 0.0 * $coordFactor
+	symb yloc = 0.01 * $coordFactor
+	hist xyz aprs $xloc * * $yloc * * 
+	hist functimefunc_1 
+	histname electrode vq all 
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Run the Model 
+c 
+c ************************************************************************************************************* 
+c 
+c 			Specify the number of time steps to be run. Can be set to auto by using 
+c			'Ringdown'.
+
+c 
+c ************************************************************************************************************* 
+
+c User defined runtime for the model
+symb #get { step } timestep 
+symb ttime = 2e-05
+symb nexec = $ttime / $step
+symb nloops = 5
+symb nexec2 = $nexec / $nloops
+
+c Set up Plotting
+grph
+	nvew 1 1 
+	end
+ 
+
+c Set up Snapshot file
+data
+	file out 'snapshot.flxdato' 
+	end
+ 
+c Create run plot procedure
+proc plot save 
+
+c Run some timesteps
+exec $nexec2 
+
+c Plot model
+grph
+	mirr off * * 
+	plot aprs 
+	end
+ 
+data
+	out aprs 
+	end
+ 
+
+end$ proc
+
+c Run model then wait
+proc plot $nloops 
+
+term
+
+data
+	file out '2D_Transducer_3.flxdato' 
+	out modl 
+	out apmx 
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Save symbol variables to file for later use
+c 
+c ************************************************************************************************************* 
+
+symb #get { labl } jobname 
+symb #save '$labl.symb' 
+stop  		 /* return to command prompt

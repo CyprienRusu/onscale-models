@@ -1,0 +1,77 @@
+symb pzt_thk_b = 0.002
+symb pzt_thk_e = 0.004
+symb n = 3
+
+symb pzt_thk_step = ( $pzt_thk_e - $pzt_thk_b ) / $n
+symb pzt_current = $pzt_thk_b
+
+
+symb hard_thk_b = 0.000634
+symb hard_thk_e = 0.0012
+symb m = 3
+
+symb hard_thk_step = ( $hard_thk_e - $hard_thk_b ) / $m
+symb hard_current = $hard_thk_b
+
+term
+
+c Inputs
+text tfile = '2D_Transducer_3.flxhst' if noexist
+text tdir = '2D_Transducer_3-20191205-192055' if noexist
+symb nfiles = 9 if noexist
+
+symb I = 0
+
+c Loop through files
+do loopj J 1 3
+do loopk K 1 3
+
+symb I = $I + 1
+
+symb #msg 1
+pzt_thk = $pzt_current
+
+
+symb #msg 1
+hard_thk = $hard_current
+
+
+c Write progress
+symb #msg 1
+Processing file $I of $nfiles...
+
+c Read data
+text tpath = '$tdir/$I/$tfile'
+read f1 $tpath
+
+c Calculate impedance
+freq
+	file f2 cler
+	wndo hann righ 1
+c	time pad $npad
+	type amp
+	impd f1 3 4
+
+grph
+c	type stnd                          /* Use standard graphics for Logarithmic plots
+	nvew 2
+	pset wndo 1.e6 2.e6                  /* Set up X Scale
+	plot f2 1                        /* Plot Amplitude
+	set log y on 
+	plot f2 2                     /* Plot Phase
+	end
+
+c Get resonant frequencies and impedances
+symb #get { fp zp } curvmax f2 1 1.e6 2.e6
+
+term
+
+c Write to screen and file
+symb #msg 1 >> 'kpi_report.csv'
+$I, $pzt_current, $hard_current, $fp, $zp
+
+symb pzt_current = $pzt_thk_b + $J * $pzt_thk_step
+symb hard_current = $hard_thk_b + $K * $hard_thk_step
+
+end$ loopk
+end$ loopj
