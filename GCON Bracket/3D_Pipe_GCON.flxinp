@@ -1,0 +1,398 @@
+c mem 800 200 /* Allocate 800 megawords of memory - 3 GigaBytes (Not necesarry for Windows Operating Systems)
+c NOTE: MEM Command must be first command in file, if used. (Line 1)
+rest no 
+
+c ************************************************************************************************************* 
+c 
+c 				Generated Flex Input File
+c 
+c ************************************************************************************************************* 
+c 
+c	DESIGNER			:OnScale - Designer Generated
+c	MODEL DESCRIPTION	:
+c	DATE CREATED		:16 Oct 2019
+c	VERSION				:1.0
+c ************************************************************************************************************* 
+
+mp
+	omp * *  		 /* Number of CPUs to be used in the execution.
+	end
+ 
+titl 3D Pipe GCON 
+
+c ************************************************************************************************************* 
+c 
+c 			Define User Variables 
+c 
+c ************************************************************************************************************* 
+c 
+c These variables have been set by the user through the interface.
+c 
+c ************************************************************************************************************* 
+
+symb coordFactor = 1.0		 /* Coordinate conversion factor
+symb timeFactor = 1.0		 /* Time conversion factor
+symb dMassFactor = 1.0		 /* Mass conversion factor
+text geom_filename = 'pipe.step'		 /* The source file for the model
+symb geom_units_scale = 0.001		 /* Conversion from file units to meters
+symb geom_scaleFactor = 1.0 * $geom_units_scale * $coordFactor
+symb freqint = 1e+06		 /* Determined Drive Frequency (Hz)
+
+c ************************************************************************************************************* 
+c 
+c 			Define Meshing 
+c 
+c ************************************************************************************************************* 
+c 
+c 			Set the variable for the approximate element size for the model. Must be 
+c			sufficient to represent the wavelengths of interest. Recommended that at least 
+c			15 elements per wavelength are used.
+
+c 
+c ************************************************************************************************************* 
+
+symb freqdamp = $freqint
+symb box = 0.004
+
+c -------------------------------------------------------------------------
+c Global variables used in all the material definitions
+c -------------------------------------------------------------------------
+c
+symb epvacm = 8.854e-12               /* dielectric constant for vacumn
+symb freqdamp = 1.e6 if noexist       /* specified frequency for damping model
+symb rmu0 = 1.2566e-6
+
+c
+c -------------------------------------------------------------------------
+c    Now define the axis transformation - only posx used in this file
+c -------------------------------------------------------------------------
+
+axis
+     form vctr
+     defn posx car2 0. 0. 0.    1.  0.  0.   0. 1. 0.
+     defn negx car2 0. 0. 0.   -1.  0.  0.   0. 1. 0.
+     defn posy car2 0. 0. 0.    0.  1.  0.   0. 0. 1.
+     defn negy car2 0. 0. 0.    0. -1.  0.   0. 0. 1.
+     defn posz car2 0. 0. 0.    0.  0.  1.   1. 0. 0.
+     defn negz car2 0. 0. 0.    0.  0. -1.   1. 0. 0.
+     end
+
+c -------------------------------------------------------------------------
+c    Input material properties to program
+c -------------------------------------------------------------------------
+
+matr
+
+c -------------------------------------------------------------- 
+c type : METAL : 
+c name : steel : 
+c desc : Mild Steel , generic : 
+c -------------------------------------------------------------- 
+
+	wvsp on 
+	type elas 
+	prop steel 7700.00 5762.42 3185.29 0.010000
+	thrm steel 472 49.8 49.8 49.8 1.0 0 0 27
+	elec void $epvacm
+	end
+
+c ************************************************************************************************************* 
+c 
+c 			CAD Geometry Allocation
+c 
+c ************************************************************************************************************* 
+
+cad
+	defn cad_1 
+	file 'pipe.step' 
+	scal $geom_scaleFactor 
+	mesh gcon * 
+	mopt_tet nsample 80
+	matr cad_all steel
+	dout * * 1 2 0 0 0 0
+	surf surf_1_31 1 31 
+	surf surf_1_32 1 32 
+	surf surf_1_33 1 33 
+	surf surf_1_34 1 34 
+	
+	surf surf_1_9 1 9 
+	surf surf_1_11 1 11 
+	surf surf_1_12 1 12 
+	surf surf_1_13 1 13 
+	
+	surf pload_int1 1 35
+	surf pload_int2 1 22
+	surf pload_int3 1 37
+
+	surf pload_ext1 1 16
+	surf pload_ext2 1 11
+	surf pload_ext3 1 18
+	
+	surf pload 1 15
+	
+	
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Geometry Locations (XYZ)
+c 
+c ************************************************************************************************************* 
+
+
+c Scale Parameters
+symb xmin = -695.0 * $coordFactor
+symb xmax = 0.0 * $coordFactor
+symb ymin = -180.0 * $coordFactor
+symb ymax = 180.0 * $coordFactor
+symb zmin = -180.0 * $coordFactor
+symb zmax = 515.0 * $coordFactor
+
+c Determine lengths of the model
+symb xlen = ( $xmax - $xmin )
+symb ylen = ( $ymax - $ymin )
+symb zlen = ( $zmax - $zmin )
+
+c *************************************************** 
+c 
+c 			Keypoints in the X-Direction
+c 
+c *************************************************** 
+
+symb #keycord x 1 $xmin $xlen 
+symb #get { idx } rootmax x 
+
+c *************************************************** 
+c 
+c 			Keypoints in the Y-Direction
+c 
+c *************************************************** 
+
+symb #keycord y 1 $ymin $ylen 
+symb #get { jdx } rootmax y 
+
+c *************************************************** 
+c 
+c 			Keypoints in the Z-Direction
+c 
+c *************************************************** 
+
+symb #keycord z 1 $zmin $zlen 
+symb #get { kdx } rootmax z 
+
+c ************************************************************************************************************* 
+c 
+c 			Indices Locations (IJK)
+c 
+c ************************************************************************************************************* 
+
+c Grid in I direction, using approximately element size of 'box' and at least 1 element
+symb #keyindx i 1 $idx 1 $box 1 
+symb indgrd = $i$idx
+
+c Grid in J direction, using approximately element size of 'box' and at least 1 element
+symb #keyindx j 1 $jdx 1 $box 1 
+symb jndgrd = $j$jdx
+
+c Grid in K direction, using approximately element size of 'box' and at least 1 element
+symb #keyindx k 1 $kdx 1 $box 1 
+symb kndgrd = $k$kdx
+
+
+c ************************************************************************************************************* 
+c 
+c 			GCON Grid & Geometry Allocation
+c 
+c ************************************************************************************************************* 
+
+grid 100 100 100
+
+gcon
+	defn cad cad_1
+	end
+
+geom
+	skew cad
+	end
+ 
+symb amp_staticfunc_1 = 40000.0
+func
+	name staticfunc_1 
+	step $amp_staticfunc_1 
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Primitive Definitions
+c 
+c ************************************************************************************************************* 
+
+site
+	regn void 
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Boundary Definitions
+c 
+c ************************************************************************************************************* 
+
+
+
+c ************************************************************************************************************* 
+c 
+c 			Calculated Properties 
+c 
+c ************************************************************************************************************* 
+c 
+c 			By default, Flex only calculates the minimum required data set, typically this 
+c			means only velocities. This is done for memory efficiency. Should other 
+c			properites be required (e.g. displacements, stresses, strains, pressure), then 
+c			these must be requested by the CALC command. The manual lists all these options
+
+c 
+c ************************************************************************************************************* 
+
+calc
+	disp 		 /* calculate displacements
+	sj2p
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Fixed Load Definitions
+c 
+c ************************************************************************************************************* 
+
+boun
+	defn load_1 fixd 
+	dof x y z rx ry rz 
+	cad cad_1 surf_1_31 steel * * * * * * 
+	cad cad_1 surf_1_32 steel * * * * * * 
+	cad cad_1 surf_1_33 steel * * * * * * 
+	cad cad_1 surf_1_34 steel * * * * * * 
+	end
+ 
+boun
+	defn load_2 fixd 
+	dof x y z rx ry rz 
+	cad cad_1 surf_1_9 steel * * * * * * 
+	cad cad_1 surf_1_11 steel * * * * * * 
+	cad cad_1 surf_1_12 steel * * * * * * 
+	cad cad_1 surf_1_13 steel * * * * * * 
+	end 
+ 
+plod
+ 	pdef pload1 funcstaticfunc_1 
+ 	vctr vect1 1 1 1
+	cad pload1 vect1 cad_1 pload_int1
+  	end
+
+plod
+ 	pdef pload2 funcstaticfunc_1 
+ 	vctr vect2 1 1 1
+	cad pload2 vect2 cad_1 pload_int2
+  	end
+
+plod
+ 	pdef pload3 funcstaticfunc_1 
+ 	vctr vect3 1 1 1
+	cad pload3 vect3 cad_1 pload_int3
+  	end
+
+stat
+	type elas 
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Process Model 
+c 
+c ************************************************************************************************************* 
+c 
+c 			Issue process (PRCS) command. Checks model integrity, and calculates stable 
+c			time step. NOTE: Process command must always be issued
+
+c 
+c ************************************************************************************************************* 
+
+symb #msg 1
+Checking Model Integrity......
+prcs
+
+c ************************************************************************************************************* 
+c 
+c 			Choose Time Histories To Store 
+c 
+c ************************************************************************************************************* 
+c 
+c 			Save field (such as displacement or pressure) from a node or element for all 
+c			time steps with POUT command. Histories are referenced by order of 
+c			specification. Histories will be saved in the Flex History file (flxhst).
+
+c 
+c ************************************************************************************************************* 
+
+pout
+	rate 1 
+	symb xloc = 0.0 * $coordFactor
+	symb yloc = 0.0 * $coordFactor
+	symb zloc = 0.0 * $coordFactor
+	hist xyz ydsp $xloc * * $yloc * * $zloc * * 
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Run the Model
+c 
+c ************************************************************************************************************* 
+
+grph
+    type stnd
+	line on 
+	nvew 1 1 
+	pset boxsize 0.02	
+	plot matr  boun_gcname boun_gctype
+	end
+
+c exec 1000000 
+
+term
+
+do loop1 i 1 50
+
+exec 10
+
+grph
+ 	line on
+	plot xdsp
+	imag 
+
+end$ loop1
+
+c Set up Snapshot file
+data
+	file out '3Dpipe.vtu' 
+	form out prvu
+	out xdsp
+	out ydsp
+	out zdsp
+	out sj2p 
+	end
+ 
+
+c ************************************************************************************************************* 
+c 
+c 			Save symbol variables to file for later use
+c 
+c ************************************************************************************************************* 
+
+symb #get { labl } jobname 
+symb #save '$labl.symb' 
+stop  		 /* return to command prompt
