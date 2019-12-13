@@ -1,0 +1,1176 @@
+{
+    "*jfp": {
+        "date": "12 13 2019 18:13:23",
+        "file": "C:\\Onscale\\Onscale models\\transducer_2D\\Transducer_2D.jfp",
+        "type": "OnScale Designer Project File",
+        "version": "1.4"
+    },
+    "Files": {
+        "Project": "Transducer_2D.jfp"
+    },
+    "ModelDB": {
+        "Analysis": {
+            "AnalysisType::AnalysisType": "Dynamic",
+            "IterationType::IterationType": "Defined",
+            "LayoutOption": 2,
+            "RunTimeItems": [
+                {
+                    "DataObject": {
+                        "SubTitle": "",
+                        "TimeHistoryID": "output_2",
+                        "class": "RunTimeHistory",
+                        "xLog": false,
+                        "xMaximum": -1.7976931348623157e+308,
+                        "xMinimum": 1.7976931348623157e+308,
+                        "yLog": false,
+                        "yMaximum": -1.7976931348623157e+308,
+                        "yMinimum": 1.7976931348623157e+308
+                    },
+                    "HasCustom": false,
+                    "ID": 1,
+                    "PlotType::PlotType": "TimeHistory",
+                    "class": "RunTimeItem"
+                },
+                {
+                    "DataObject": {
+                        "ArrayComponent::ArrayComponent": "APRS",
+                        "ArrayType::ArrayType": "AcousticPressure",
+                        "CustomView": false,
+                        "EyeVector": [
+                            1,
+                            1,
+                            1
+                        ],
+                        "Maximum": -1.7976931348623157e+308,
+                        "Minimum": 1.7976931348623157e+308,
+                        "PlotType::Type": "Array",
+                        "SubTitle": "",
+                        "UpVector": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "class": "RunTimeArray",
+                        "xSymmetry": false,
+                        "ySymmetry": false,
+                        "zSymmetry": false
+                    },
+                    "HasCustom": false,
+                    "ID": 2,
+                    "PlotType::PlotType": "Array",
+                    "class": "RunTimeItem"
+                },
+                {
+                    "DataObject": {
+                        "ArrayComponent::ArrayComponent": "APRS",
+                        "ArrayType::ArrayType": "AcousticPressure",
+                        "CustomView": false,
+                        "EyeVector": [
+                            1,
+                            1,
+                            1
+                        ],
+                        "Maximum": -1.7976931348623157e+308,
+                        "Minimum": 1.7976931348623157e+308,
+                        "PlotType::Type": "Array",
+                        "SubTitle": "",
+                        "UpVector": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "class": "RunTimeArray",
+                        "xSymmetry": false,
+                        "ySymmetry": false,
+                        "zSymmetry": false
+                    },
+                    "HasCustom": false,
+                    "ID": 3,
+                    "PlotType::PlotType": "Array",
+                    "class": "RunTimeItem"
+                },
+                {
+                    "DataObject": {
+                        "ArrayComponent::ArrayComponent": "APRS",
+                        "ArrayType::ArrayType": "AcousticPressure",
+                        "CustomView": false,
+                        "EyeVector": [
+                            1,
+                            1,
+                            1
+                        ],
+                        "Maximum": -1.7976931348623157e+308,
+                        "Minimum": 1.7976931348623157e+308,
+                        "PlotType::Type": "Array",
+                        "SubTitle": "",
+                        "UpVector": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "class": "RunTimeArray",
+                        "xSymmetry": false,
+                        "ySymmetry": false,
+                        "zSymmetry": false
+                    },
+                    "HasCustom": false,
+                    "ID": 4,
+                    "PlotType::PlotType": "Array",
+                    "class": "RunTimeItem"
+                }
+            ],
+            "SaveFormat::SaveFormat": "None",
+            "activateCapSubSample": true,
+            "capacitanceSubSample": 1000,
+            "class": "Analysis",
+            "contactDistPerc": 0.95,
+            "contactStiffness": 1000000000,
+            "maxIterations": 1000000,
+            "modelRunTime": 2e-05,
+            "nFrames": 20,
+            "nViews": 2,
+            "timestepFactor": 0.8,
+            "timestepValue": 1
+        },
+        "Boundary": {
+            "class": "Boundary",
+            "constraints": [
+            ],
+            "xMax": {
+                "BoundaryType::boundaryType": "absr",
+                "DataObject": {
+                },
+                "Side::side": "xmax",
+                "class": "BoundaryItem",
+                "visible": false
+            },
+            "xMin": {
+                "BoundaryType::boundaryType": "symm",
+                "DataObject": {
+                },
+                "Side::side": "xmin",
+                "class": "BoundaryItem",
+                "visible": false
+            },
+            "yMax": {
+                "BoundaryType::boundaryType": "absr",
+                "DataObject": {
+                },
+                "Side::side": "ymax",
+                "class": "BoundaryItem",
+                "visible": false
+            },
+            "yMin": {
+                "BoundaryType::boundaryType": "absr",
+                "DataObject": {
+                },
+                "Side::side": "ymin",
+                "class": "BoundaryItem",
+                "visible": false
+            },
+            "zMax": {
+                "BoundaryType::boundaryType": "free",
+                "DataObject": {
+                },
+                "Side::side": "zmax",
+                "class": "BoundaryItem",
+                "visible": false
+            },
+            "zMin": {
+                "BoundaryType::boundaryType": "free",
+                "DataObject": {
+                },
+                "Side::side": "zmin",
+                "class": "BoundaryItem",
+                "visible": false
+            }
+        },
+        "Circuit": {
+            "circList": [
+            ],
+            "class": "Circuit"
+        },
+        "EstatWindows": {
+            "class": "EstatWindows",
+            "estatWindowsList": [
+            ]
+        },
+        "Geometry": {
+            "class": "Geometry",
+            "sources": [
+            ]
+        },
+        "Grid": {
+            "AxiSymmetry::axiSymmetry": "None",
+            "class": "Grid",
+            "extents": {
+                "NodeDef::definition": "XYZ",
+                "begin": [
+                    {
+                        "class": "FlexParameterProperty",
+                        "refParam": "",
+                        "value": 0
+                    },
+                    {
+                        "class": "FlexParameterProperty",
+                        "refParam": "",
+                        "value": 0
+                    },
+                    {
+                        "class": "FlexParameterProperty",
+                        "refParam": "",
+                        "value": 0
+                    }
+                ],
+                "class": "NodeVolume",
+                "end": [
+                    {
+                        "class": "FlexParameterProperty",
+                        "refParam": "",
+                        "value": 0.015
+                    },
+                    {
+                        "class": "FlexParameterProperty",
+                        "refParam": "",
+                        "value": 0.015
+                    },
+                    {
+                        "class": "FlexParameterProperty",
+                        "refParam": "",
+                        "value": 0
+                    }
+                ],
+                "increment": [
+                    {
+                        "class": "FlexParameterProperty",
+                        "refParam": "",
+                        "value": 0
+                    },
+                    {
+                        "class": "FlexParameterProperty",
+                        "refParam": "",
+                        "value": 0
+                    },
+                    {
+                        "class": "FlexParameterProperty",
+                        "refParam": "",
+                        "value": 1
+                    }
+                ],
+                "nodeName": ""
+            },
+            "userDefinedExtents": false,
+            "xKeypoints": {
+                "ID": "x",
+                "class": "Keypoints",
+                "keypointList": [
+                ],
+                "visible": false
+            },
+            "yKeypoints": {
+                "ID": "y",
+                "class": "Keypoints",
+                "keypointList": [
+                ],
+                "visible": false
+            },
+            "zKeypoints": {
+                "ID": "z",
+                "class": "Keypoints",
+                "keypointList": [
+                ],
+                "visible": true
+            }
+        },
+        "Load": {
+            "class": "Load",
+            "loadList": [
+                {
+                    "DataObject": {
+                        "AreaScaling": 1,
+                        "CircuitID": "",
+                        "ScaleFactor": 1,
+                        "Termination": "timefunc_1",
+                        "TimeShift": 0,
+                        "class": "PiezoLoad",
+                        "loadName": "load_1"
+                    },
+                    "Generated": true,
+                    "LoadID": 1,
+                    "LoadType::LoadType": "Voltage",
+                    "PartID": -1,
+                    "Removed": false,
+                    "SelectionEntity": {
+                        "InterfaceType::type": "Item",
+                        "boundingBox": {
+                            "NodeDef::definition": "XYZ",
+                            "begin": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.007
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "class": "NodeVolume",
+                            "end": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.01
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.007
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "increment": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 1
+                                }
+                            ],
+                            "nodeName": ""
+                        },
+                        "boundingBoxModified": false,
+                        "class": "LoadInterface",
+                        "interfaceId": "primitive_4",
+                        "itemId": "primitive_3"
+                    },
+                    "Source": "",
+                    "class": "LoadItem",
+                    "color": "#1e90ff",
+                    "id": "load_1",
+                    "name": "load_1",
+                    "onPrimitive": false,
+                    "opacity": 100,
+                    "visible": false
+                },
+                {
+                    "DataObject": {
+                        "AreaScaling": 1,
+                        "CircuitID": "",
+                        "ScaleFactor": 1,
+                        "Termination": "grnd",
+                        "TimeShift": 0,
+                        "class": "PiezoLoad",
+                        "loadName": "load_2"
+                    },
+                    "Generated": true,
+                    "LoadID": 2,
+                    "LoadType::LoadType": "Voltage",
+                    "PartID": -1,
+                    "Removed": false,
+                    "SelectionEntity": {
+                        "InterfaceType::type": "Item",
+                        "boundingBox": {
+                            "NodeDef::definition": "XYZ",
+                            "begin": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.005
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "class": "NodeVolume",
+                            "end": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.01
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.005
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "increment": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 1
+                                }
+                            ],
+                            "nodeName": ""
+                        },
+                        "boundingBoxModified": false,
+                        "class": "LoadInterface",
+                        "interfaceId": "primitive_2",
+                        "itemId": "primitive_3"
+                    },
+                    "Source": "",
+                    "class": "LoadItem",
+                    "color": "#ffffe0",
+                    "id": "load_2",
+                    "name": "load_2",
+                    "onPrimitive": false,
+                    "opacity": 100,
+                    "visible": false
+                }
+            ]
+        },
+        "Material": {
+            "class": "Material",
+            "matr": {
+                "back20": {
+                    "description": "Backing, tungsten loaded epoxy, 20%vf, 8.6 MRayl",
+                    "elec": {
+                        "epix": 4,
+                        "epiy": 4,
+                        "epiz": 4,
+                        "name": "back20",
+                        "optionELEC": "strn"
+                    },
+                    "flexname": "back20",
+                    "hasAxis": false,
+                    "hasColor": false,
+                    "hasElec": true,
+                    "hasPerm": false,
+                    "hasPiez": false,
+                    "hasProp": true,
+                    "hasThex": false,
+                    "hasThrm": false,
+                    "hasXdmp": true,
+                    "matType": "elas",
+                    "materialCategory": "EPOXY",
+                    "prop": {
+                        "dampLinearCoefficientVisc": 0,
+                        "dampQuadCoefficientVisc": 0,
+                        "density": 4800,
+                        "hourglass": 0.01,
+                        "name": "back20",
+                        "vlong": 1800,
+                        "vshear": 962
+                    },
+                    "userMaterial": true,
+                    "vdmp": {
+                        "dampingDistance": 0.01,
+                        "damptype": "vdmp",
+                        "dampunits": "db",
+                        "freqdamp": 1000000,
+                        "freqloss": 30000000,
+                        "ldamp": 310,
+                        "name": "back20",
+                        "powerBulkDamp": 1,
+                        "powerShearDamp": 1,
+                        "sdamp": 930
+                    },
+                    "wvspOn": true
+                },
+                "hard": {
+                    "description": "Vantico HY1300/CY1301",
+                    "elec": {
+                        "epix": 4,
+                        "epiy": 4,
+                        "epiz": 4,
+                        "name": "hard",
+                        "optionELEC": "strn"
+                    },
+                    "flexname": "hard",
+                    "hasAxis": false,
+                    "hasColor": false,
+                    "hasElec": true,
+                    "hasPerm": false,
+                    "hasPiez": false,
+                    "hasProp": true,
+                    "hasThex": false,
+                    "hasThrm": false,
+                    "hasXdmp": true,
+                    "matType": "elas",
+                    "materialCategory": "EPOXY",
+                    "prop": {
+                        "dampLinearCoefficientVisc": 0,
+                        "dampQuadCoefficientVisc": 0,
+                        "density": 1149,
+                        "hourglass": 0.01,
+                        "name": "hard",
+                        "vlong": 2536,
+                        "vshear": 1179
+                    },
+                    "userMaterial": true,
+                    "vdmp": {
+                        "dampingDistance": 0.01,
+                        "damptype": "vdmp",
+                        "dampunits": "db",
+                        "freqdamp": 1000000,
+                        "freqloss": 1000000,
+                        "ldamp": 2.87,
+                        "name": "hard",
+                        "powerBulkDamp": 1,
+                        "powerShearDamp": 1,
+                        "sdamp": 7.38
+                    },
+                    "wvspOn": true
+                },
+                "pmt3": {
+                    "axis": {
+                        "name": "pmt3",
+                        "pzaxis": "posy"
+                    },
+                    "description": "CTS 3203HD",
+                    "elec": {
+                        "epix": 1305.8,
+                        "epiy": 1305.8,
+                        "epiz": 1200.2,
+                        "name": "pmt3",
+                        "optionELEC": "strn"
+                    },
+                    "flexname": "pmt3",
+                    "hasAxis": true,
+                    "hasColor": false,
+                    "hasElec": true,
+                    "hasPerm": false,
+                    "hasPiez": true,
+                    "hasProp": true,
+                    "hasThex": false,
+                    "hasThrm": false,
+                    "hasXdmp": true,
+                    "matType": "lean",
+                    "materialCategory": "PIEZO",
+                    "piez": {
+                        "e15": 16.054,
+                        "e24": 16.054,
+                        "e31": -9.44,
+                        "e32": -9.44,
+                        "e33": 22.495,
+                        "name": "pmt3",
+                        "optionPIEZ": "strs"
+                    },
+                    "prop": {
+                        "c11": 137450000000,
+                        "c12": 87900000000,
+                        "c13": 92300000000,
+                        "c14": 0,
+                        "c15": 0,
+                        "c16": 0,
+                        "c22": 137450000000,
+                        "c23": 92300000000,
+                        "c24": 0,
+                        "c25": 0,
+                        "c26": 0,
+                        "c33": 125740000000,
+                        "c34": 0,
+                        "c35": 0,
+                        "c36": 0,
+                        "c44": 22279000000,
+                        "c45": 0,
+                        "c46": 0,
+                        "c55": 22279000000,
+                        "c56": 0,
+                        "c66": 24779000000,
+                        "dampLinearCoefficientVisc": 0,
+                        "dampQuadCoefficientVisc": 0,
+                        "density": 7820,
+                        "dummyBulk": 1,
+                        "dummyShear": 1,
+                        "hourglass": 0.01,
+                        "name": "pmt3",
+                        "optionLEAN": "stif"
+                    },
+                    "rdmp": {
+                        "dampingDistance": 0,
+                        "damptype": "rdmp",
+                        "dampunits": "q",
+                        "freqdamp": 1000000,
+                        "freqloss": 1000000,
+                        "ldamp": 90,
+                        "name": "pmt3",
+                        "powerBulkDamp": 0,
+                        "powerShearDamp": 0,
+                        "sdamp": 90
+                    },
+                    "userMaterial": true,
+                    "wvspOn": true
+                },
+                "watr": {
+                    "description": "Water at 25C",
+                    "elec": {
+                        "epix": 3,
+                        "epiy": 3,
+                        "epiz": 3,
+                        "name": "watr",
+                        "optionELEC": "strn"
+                    },
+                    "flexname": "watr",
+                    "hasAxis": false,
+                    "hasColor": false,
+                    "hasElec": true,
+                    "hasPerm": false,
+                    "hasPiez": false,
+                    "hasProp": true,
+                    "hasThex": false,
+                    "hasThrm": true,
+                    "hasXdmp": true,
+                    "matType": "elas",
+                    "materialCategory": "FLUID",
+                    "prop": {
+                        "dampLinearCoefficientVisc": 0,
+                        "dampQuadCoefficientVisc": 0,
+                        "density": 1000,
+                        "hourglass": 0,
+                        "name": "watr",
+                        "vlong": 1496,
+                        "vshear": 0
+                    },
+                    "thrm": {
+                        "CondMatx": 0.61,
+                        "CondMaty": 0.61,
+                        "CondMatz": 0.61,
+                        "MassFlowRateFluid": 0,
+                        "SpecHeatFluid": 0,
+                        "SpecHeatMat": 4181,
+                        "TempFluid": 27,
+                        "hourglassTHRM": 1,
+                        "name": "watr"
+                    },
+                    "userMaterial": true,
+                    "vdmp": {
+                        "dampingDistance": 0.01,
+                        "damptype": "vdmp",
+                        "dampunits": "db",
+                        "freqdamp": 1000000,
+                        "freqloss": 1000000,
+                        "ldamp": 0.002,
+                        "name": "watr",
+                        "powerBulkDamp": 2,
+                        "powerShearDamp": 0,
+                        "sdamp": 0
+                    },
+                    "wvspOn": true
+                }
+            }
+        },
+        "ModelConfig": {
+            "BasicMeshDefinition::basicMeshDef": "Medium",
+            "DistanceUnit": 1,
+            "FrequencyUnit": 0,
+            "MeshDefinition::definitionType": "Advanced",
+            "ModelDescription": "ss",
+            "ModelName": "Transducer_2D",
+            "ModelType::ModelType": "Model_2DAxi_Y",
+            "SolverType::solverType": "Explicit",
+            "TimeUnit": 0,
+            "backgroundMaterial": "void",
+            "class": "ModelConfig",
+            "coordConvFactor": 1,
+            "cpuValue": 1,
+            "defnElemSize": false,
+            "defnFreqDamp": false,
+            "defnFreqInterest": false,
+            "defnMeshVelocity": false,
+            "elementSize": 0.0003,
+            "elemsperWL": 15,
+            "freqDamp": 1000000,
+            "freqInterest": 1000000,
+            "limitCPU": false,
+            "massConvFactor": 1,
+            "memoryRequested": 3000,
+            "meshVelocity": 1496,
+            "rest": false,
+            "timeConvFactor": 1,
+            "usingDoublePrecison": false,
+            "zoning": false
+        },
+        "Node": {
+            "class": "Node",
+            "nodeList": [
+            ]
+        },
+        "Output": {
+            "ExportMatlab": false,
+            "Rate": 1,
+            "class": "Output",
+            "outputList": [
+                {
+                    "DataObject": {
+                        "CalculateTVR": false,
+                        "Component::Plane": "Y",
+                        "Position": 0.0085,
+                        "class": "ExtrapData",
+                        "outputName": "output_1"
+                    },
+                    "OutputType::OutputType": "Extrapolation",
+                    "class": "OutputItem",
+                    "color": "#006400",
+                    "id": "output_1",
+                    "name": "output_1",
+                    "opacity": 100,
+                    "visible": false
+                },
+                {
+                    "DataObject": {
+                        "ArrayType::arrayType": "AcousticPressure",
+                        "Component::component": "APRS",
+                        "Location": [
+                            0,
+                            0.01,
+                            0
+                        ],
+                        "class": "TimeHistoryData",
+                        "outputName": "output_2"
+                    },
+                    "OutputType::OutputType": "TimeHistory",
+                    "class": "OutputItem",
+                    "color": "#b22222",
+                    "id": "output_2",
+                    "name": "output_2",
+                    "opacity": 100,
+                    "visible": false
+                },
+                {
+                    "DataObject": {
+                        "ArrayType::arrayType": "AcousticPressure",
+                        "Component::component": "APRS",
+                        "class": "SnapshotData",
+                        "outputName": "output_3"
+                    },
+                    "OutputType::OutputType": "Snapshot",
+                    "class": "OutputItem",
+                    "color": "#808000",
+                    "id": "output_3",
+                    "name": "output_3",
+                    "opacity": 100,
+                    "visible": true
+                },
+                {
+                    "DataObject": {
+                        "ArrayType::arrayType": "AcousticPressure",
+                        "Component::component": "APRS",
+                        "FieldType::fieldType": "Maximum",
+                        "class": "FieldData",
+                        "outputName": "output_4"
+                    },
+                    "OutputType::OutputType": "Field",
+                    "class": "OutputItem",
+                    "color": "#b22222",
+                    "id": "output_4",
+                    "name": "output_4",
+                    "opacity": 100,
+                    "visible": true
+                }
+            ]
+        },
+        "Site": {
+            "class": "Site",
+            "primitiveList": [
+                {
+                    "DataObject": {
+                        "blockValues": {
+                            "NodeDef::definition": "XYZ",
+                            "begin": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "class": "NodeVolume",
+                            "end": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.015
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.015
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "increment": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 1
+                                }
+                            ],
+                            "nodeName": ""
+                        },
+                        "class": "SiteBlok",
+                        "is3d": false,
+                        "primitiveName": "primitive_1"
+                    },
+                    "PatternDirection::patternDir": "X",
+                    "PatternType::patternType": "None",
+                    "SiteType::type": "BLOK",
+                    "UserDefinedColor": false,
+                    "class": "SiteItem",
+                    "color": "#ffff00",
+                    "flexMaterial": "watr",
+                    "id": "primitive_1",
+                    "name": "primitive_1",
+                    "numReps": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "opacity": 100,
+                    "patternDist": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "precedence": 0,
+                    "visible": true
+                },
+                {
+                    "DataObject": {
+                        "blockValues": {
+                            "NodeDef::definition": "XYZ",
+                            "begin": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "class": "NodeVolume",
+                            "end": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.01
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.005
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "increment": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 1
+                                }
+                            ],
+                            "nodeName": ""
+                        },
+                        "class": "SiteBlok",
+                        "is3d": false,
+                        "primitiveName": "primitive_2"
+                    },
+                    "PatternDirection::patternDir": "X",
+                    "PatternType::patternType": "None",
+                    "SiteType::type": "BLOK",
+                    "UserDefinedColor": false,
+                    "class": "SiteItem",
+                    "color": "#0000ff",
+                    "flexMaterial": "back20",
+                    "id": "primitive_2",
+                    "name": "primitive_2",
+                    "numReps": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "opacity": 100,
+                    "patternDist": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "precedence": 1,
+                    "visible": true
+                },
+                {
+                    "DataObject": {
+                        "blockValues": {
+                            "NodeDef::definition": "XYZ",
+                            "begin": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.005
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "class": "NodeVolume",
+                            "end": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.01
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.007
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "increment": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 1
+                                }
+                            ],
+                            "nodeName": ""
+                        },
+                        "class": "SiteBlok",
+                        "is3d": false,
+                        "primitiveName": "primitive_3"
+                    },
+                    "PatternDirection::patternDir": "X",
+                    "PatternType::patternType": "None",
+                    "SiteType::type": "BLOK",
+                    "UserDefinedColor": false,
+                    "class": "SiteItem",
+                    "color": "#00ff00",
+                    "flexMaterial": "pmt3",
+                    "id": "primitive_3",
+                    "name": "primitive_3",
+                    "numReps": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "opacity": 100,
+                    "patternDist": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "precedence": 2,
+                    "visible": true
+                },
+                {
+                    "DataObject": {
+                        "blockValues": {
+                            "NodeDef::definition": "XYZ",
+                            "begin": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.007
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "class": "NodeVolume",
+                            "end": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.01
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0.007634
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                }
+                            ],
+                            "increment": [
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 0
+                                },
+                                {
+                                    "class": "FlexParameterProperty",
+                                    "refParam": "",
+                                    "value": 1
+                                }
+                            ],
+                            "nodeName": ""
+                        },
+                        "class": "SiteBlok",
+                        "is3d": false,
+                        "primitiveName": "primitive_4"
+                    },
+                    "PatternDirection::patternDir": "X",
+                    "PatternType::patternType": "None",
+                    "SiteType::type": "BLOK",
+                    "UserDefinedColor": false,
+                    "class": "SiteItem",
+                    "color": "#00ffff",
+                    "flexMaterial": "hard",
+                    "id": "primitive_4",
+                    "name": "primitive_4",
+                    "numReps": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "opacity": 100,
+                    "patternDist": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "precedence": 3,
+                    "visible": true
+                }
+            ]
+        },
+        "StaticFunction": {
+            "class": "StaticFunction",
+            "staticFunctions": [
+            ]
+        },
+        "TimeFunction": {
+            "class": "TimeFunction",
+            "tFuncList": [
+                {
+                    "DataObject": {
+                        "amplitude": 1,
+                        "class": "RickerWaveletData",
+                        "driveFreq": 1000000,
+                        "driveName": "timefunc_1",
+                        "gamma": 4,
+                        "nu": 0,
+                        "timeDelay": 0
+                    },
+                    "TimeFunctionType::TimeFunctionType": "RickerWavelet",
+                    "class": "TimeFunctionItem"
+                }
+            ]
+        }
+    },
+    "Parameters": {
+    }
+}
